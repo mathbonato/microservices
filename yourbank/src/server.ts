@@ -26,8 +26,8 @@ function getBalance(statement: any[]) {
     return balance;
 }
 
-function findCustomerByCpf(cpf: any): ICustomer | undefined {
-    return customers.find(customer => customer.cpf === cpf);
+function findCustomerById(id: string): ICustomer | undefined {
+    return customers.find(customer => customer.id === id);
 }
 
 app.post("/accounts", (request: Request, response: Response) => {
@@ -43,25 +43,27 @@ app.post("/accounts", (request: Request, response: Response) => {
     }
 })
 
-app.put("/accounts", (request: Request, response: Response) => {
-    const customer = findCustomerByCpf(request.params.cpf); 
+app.put("/accounts/:id", (request: Request, response: Response) => {
+    console.log(request.params)
+    const customer = findCustomerById(request.params.id); 
 
     if (!customer) {
         return response.status(400).json({ message: "Customer not found!" });
     }
 
     const { name } = request.body;
+    
     customer.name = name;
     return response.status(200).json(customer);
 })
 
-app.get("/accounts", (request: Request, response: Response) => {
-    const customer = findCustomerByCpf(request.params.cpf); 
+app.get("/accounts/:id", (request: Request, response: Response) => {
+    const customer = findCustomerById(request.params.id); 
     return response.status(201).json(customer);
 })
 
-app.delete("/accounts", (request: Request, response: Response) => {
-    const customer = findCustomerByCpf(request.params.cpf);
+app.delete("/accounts/:id", (request: Request, response: Response) => {
+    const customer = findCustomerById(request.params.id);
 
     if (!customer) {
         return response.status(400).json({ message: "Customer not found!" });
@@ -71,8 +73,8 @@ app.delete("/accounts", (request: Request, response: Response) => {
     return response.status(200).json(customers);
 })
 
-app.get("/statements", (request: Request, response: Response) => {
-    const customer = findCustomerByCpf(request.params.cpf); 
+app.get("/statements/:id", (request: Request, response: Response) => {
+    const customer = findCustomerById(request.params.id); 
 
     if (!customer) {
         return response.status(400).json({ message: "Customer not found!" });
@@ -81,9 +83,9 @@ app.get("/statements", (request: Request, response: Response) => {
     return response.status(201).json(customer.statement);
 })
 
-app.post("/deposits", (request: Request, response: Response) => {
+app.post("/deposits/:id", (request: Request, response: Response) => {
     const { description, amount } = request.body;
-    const customer = findCustomerByCpf(request.params.cpf);
+    const customer = findCustomerById(request.params.id);
 
     if (!customer) {
         return response.status(400).json({ message: "Customer not found!" });
@@ -99,9 +101,9 @@ app.post("/deposits", (request: Request, response: Response) => {
     return response.status(201).json(customer);
 })
 
-app.post("/withdrawals", (request: Request, response: Response) => {
+app.post("/withdrawals/:id", (request: Request, response: Response) => {
     const { amount } = request.body;
-    const customer = findCustomerByCpf(request.params.cpf);
+    const customer = findCustomerById(request.params.id);
 
     if (!customer) {
         return response.status(400).json({ message: "Customer not found!" });
@@ -123,8 +125,8 @@ app.post("/withdrawals", (request: Request, response: Response) => {
     }
 })
 
-app.get("/balances", (request: Request, response: Response) => {
-    const customer = findCustomerByCpf(request.params.cpf);
+app.get("/balances/:id", (request: Request, response: Response) => {
+    const customer = findCustomerById(request.params.id);
 
     if (!customer) {
         return response.status(400).json({ message: "Customer not found!" });
@@ -134,4 +136,4 @@ app.get("/balances", (request: Request, response: Response) => {
     return response.status(201).json(balance);
 })
 
-app.listen('3000')
+app.listen('3001')
