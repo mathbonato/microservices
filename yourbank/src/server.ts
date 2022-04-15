@@ -1,9 +1,8 @@
-import ExpressHttp from "./infra/http/ExpressHttp";
-import Router from "./infra/http/Router";
-import AccountRepositoryMemory from "./infra/repository/memory/AccountRepositoryMemory";
+import express from 'express';
+import { routes } from './infra/config/routes';
 
-const accountRepository = new AccountRepositoryMemory();
-const http = new ExpressHttp();
-const router = new Router(http, accountRepository);
-router.init();
-http.listen(3001);
+const app = express();
+app.use(express.json());
+app.use(routes);
+
+app.listen("3001", () => console.log("Server is running!"));

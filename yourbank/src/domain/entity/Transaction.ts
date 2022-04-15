@@ -1,11 +1,11 @@
 import  { v4 as uuidv4 } from 'uuid';
 
-export default class Statement {
-    id: string;
+export default class Transaction {
+    id?: string;
 	type: string;
     amount: number;
     description: string;
-    createdAt: Date;
+    createdAt?: Date;
 
 	constructor (type: string, amount: number, description: string, id?: string) {
         this.id = id ?? uuidv4();

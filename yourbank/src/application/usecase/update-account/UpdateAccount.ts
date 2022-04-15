@@ -1,10 +1,12 @@
 import Account from "../../../domain/entity/Account";
+import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
 import AccountRepository from "../../../domain/repository/AccountRepository";
 
 export default class UpdateAccount {
-    
-	constructor (readonly accountRepository: AccountRepository) {
-		this.accountRepository = accountRepository;
+    accountRepository: AccountRepository;
+
+	constructor (readonly repositoryFactory: RepositoryFactory) {
+		this.accountRepository = repositoryFactory.createAccountRepository();
 	}
 
 	async execute (id: string, params: {}): Promise<Account | {}> {
@@ -16,6 +18,6 @@ export default class UpdateAccount {
         if (!updatedAccount) {
             return { message: "Error on update account!" };
         }
-		return account;
+		return updatedAccount;
 	}
 }

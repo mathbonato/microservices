@@ -1,32 +1,32 @@
 
 import  { v4 as uuidv4 } from 'uuid';
 import Cpf from './Cpf';
-import Statement from './Statement';
+import Transaction from './Transaction';
 
 export default class Account {
 	id: string;
-    cpf: Cpf;
+    cpf: string;
 	name: string;
-	private statement: Statement[];
+	private statement: Transaction[];
 
 	constructor (cpf: string, name: string, id?: string) {
         this.id = id ?? uuidv4();
-		this.cpf = new Cpf(cpf);
+		this.cpf = new Cpf(cpf).getValue();
         this.name = name;
         this.statement = []
 	}
 
-    deposit (statement: Statement) {
-        this.statement.push(new Statement(statement.type, statement.amount, statement.description));
+    deposit (transaction: Transaction) {
+        this.statement.push(new Transaction(transaction.type, transaction.amount, transaction.description));
     }
 
-    withdraw (statement: Statement) {
-        this.statement.push(new Statement(statement.type, statement.amount, statement.description));
+    withdraw (transaction: Transaction) {
+        this.statement.push(new Transaction(transaction.type, transaction.amount, transaction.description));
     }
 
     getBalance () {
         const balance = this.statement.reduce((acc: number, operation: { type: string, amount: number }) => {
-            if (operation.type === 'credit') {
+            if (operation.type === 'deposit') {
                 return acc + operation.amount;
             } else {
                 return acc - operation.amount;

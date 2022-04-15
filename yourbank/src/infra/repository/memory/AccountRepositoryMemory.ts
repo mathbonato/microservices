@@ -1,42 +1,40 @@
 import Account from "../../../domain/entity/Account";
-import Cpf from "../../../domain/entity/Cpf";
 import AccountRepository from "../../../domain/repository/AccountRepository";
 
+let accounts: Account[] = [];
+
 export default class AccountRepositoryMemory implements AccountRepository {
-	accounts: Account[];
 
-	constructor () {
-		this.accounts = [];
-	}
+	constructor () {}
 
-    async getAll(): Promise<Account[]> {
-        return this.accounts;
+    getAll(): Account[] {
+        return accounts;
     }
 
-    async getById(id: string): Promise<Account | undefined> {
-        const account = this.accounts.find(account => account.id === id);
-		if (!account) throw new Error("Order not found");
-		return account;
+    getById(id: string): Account | undefined {
+        return accounts.find(account => account.id === id);
     }
 
-    async getByCpf(cpf: Cpf): Promise<Account | undefined> {
-        const account = this.accounts.find(account => account.cpf === cpf);
-		if (!account) throw new Error("Order not found");
-		return account;
+    getByCpf(cpf: string): Account | undefined {
+        return accounts.find(account => account.cpf === cpf);
     }
 
-    async create(account: Account): Promise<Account> {
-        this.accounts.push(account);
+    create(account: Account): Account {
+        accounts.push(account);
         return account;
     }
 
-    async update(id: string, updateAccount: Account): Promise<Account> {
-        const accountIndex = this.accounts.findIndex(account => account.id === updateAccount.id);
-        return this.accounts[accountIndex] = updateAccount;
+    update(id: string, updateAccount: Account): Account | undefined {
+        const account = accounts.find(account => account.id === id);
+        if (!account) return undefined;
+        if (updateAccount.cpf) account.cpf = updateAccount.cpf;
+        if (updateAccount.name) account.name = updateAccount.name;
+        const accountIndex = accounts.findIndex(account => account.id === id);
+        return accounts[accountIndex] = account;
     }
 
-    async delete(id: string): Promise<Account[]> {
-        return this.accounts = this.accounts.filter(account => account.id != id); 
+    delete(id: string): Account[] {
+        accounts = accounts.filter(account => account.id != id);
+        return accounts; 
     }
-         
 }
