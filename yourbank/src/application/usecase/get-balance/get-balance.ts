@@ -1,3 +1,4 @@
+import axios from "axios";
 import Account from "../../../domain/entity/Account";
 import Transaction from "../../../domain/entity/Transaction";
 import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
@@ -14,6 +15,11 @@ export default class GetBalance {
 		const account = await this.accountRepository.getById(id);
         if (!account) return { message: "Account not found!" };
         const balance = account.getBalance();
+		axios.post("http://localhost:8080/email/enviar",{
+            "sendTo": "sdartfgdekljtueajc@bvhrk.com",
+            "subject":"Consulta de saldo",
+            "body": `Olá ${account.name} seu saldo atual é R$${balance}`
+        }).then((res)=>console.log(res.data)).catch(console.error)
 		return balance;
 	}
 }

@@ -1,3 +1,4 @@
+import axios from "axios";
 import Account from "../../../domain/entity/Account";
 import Transaction from "../../../domain/entity/Transaction";
 import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
@@ -14,6 +15,11 @@ export default class CreateWithdraw {
 		const account = await this.accountRepository.getById(id);
         if (!account) return { message: "Account not found!" };
         account.withdraw(withdraw);
+		axios.post("http://localhost:8080/email/enviar",{
+            "sendTo": "sdartfgdekljtueajc@bvhrk.com",
+            "subject":"Saque efetuado",
+            "body": `Olá  ${account.name} saque efetuado com sucesso no valor de R$${withdraw.amount} na data ${withdraw.createdAt}`
+        }).then((res)=>console.log(res.data)).catch(console.error)
 		return account;
 	}
 }
