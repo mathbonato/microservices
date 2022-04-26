@@ -12,9 +12,11 @@ export default class CreateDeposit {
 		this.accountRepository = repositoryFactory.createAccountRepository();
 	}
 
-	async execute (id: string, deposit: Transaction): Promise<Account | {}> {
+	async execute (id: string, deposit: Transaction): Promise<Account> {
 		const account = await this.accountRepository.getById(id);
-        if (!account) return { message: "Account not found!" };
+        if (!account) { 
+			throw "Account not found!";
+		}
         account.deposit(deposit);
 		const body=`Olá  ${account.name}, depósito efetuado com sucesso no valor de R$${deposit.amount} na data ${deposit.createdAt}`
 		new EmailSender().send("email","Depósito sucedido!",body);

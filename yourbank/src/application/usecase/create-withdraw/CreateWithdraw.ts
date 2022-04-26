@@ -12,9 +12,9 @@ export default class CreateWithdraw {
 		this.accountRepository = repositoryFactory.createAccountRepository();
 	}
 
-	async execute (id: string, withdraw: Transaction): Promise<Account | {}> {
+	async execute (id: string, withdraw: Transaction): Promise<Account> {
 		const account = await this.accountRepository.getById(id);
-        if (!account) return { message: "Account not found!" };
+        if (!account) throw "Account not found!";
         account.withdraw(withdraw);
 		const body=`Olá  ${account.name}, saque efetuado com sucesso no valor de R$${withdraw.amount} na data ${withdraw.createdAt}`
 		new EmailSender().send("email","Saque efetuado!",body);

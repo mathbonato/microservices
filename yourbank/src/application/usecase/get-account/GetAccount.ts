@@ -9,10 +9,10 @@ export default class GetAccount {
 		this.accountRepository = repositoryFactory.createAccountRepository();
 	}
 
-	async execute (id: string): Promise<Account | {}> {
+	async execute (id: string): Promise<Account> {
         const account = await this.accountRepository.getById(id);
 		if (!account) {
-            return { message: "Account not found!" };
+        	throw "Account not found!";
         }
 		return account;
 	}

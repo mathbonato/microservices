@@ -19,70 +19,102 @@ export default class AccountsController {
     }
 
     async getAll (_request: Request, response: Response) {
-		const getAccounts = new GetAccounts(this.repositoryFactory);
-		const accounts = await getAccounts.execute();
-		return response.status(200).json(accounts);
+        try {
+            const getAccounts = new GetAccounts(this.repositoryFactory);
+            const accounts = await getAccounts.execute();
+            return response.status(200).json(accounts);
+        } catch (error: any) {
+            return response.status(400).json({ message: error });
+        }
 	}
 
 	async getById (request: Request, response: Response) {
-		const getAccount = new GetAccount(this.repositoryFactory);
-        const { id } = request.params;
-		const account = await getAccount.execute(id);
-		return response.status(200).json(account);
+        try {
+            const getAccount = new GetAccount(this.repositoryFactory);
+            const { id } = request.params;
+            const account = await getAccount.execute(id);
+            return response.status(200).json(account);
+        } catch (error: any) {
+            return response.status(400).json({ message: error });
+        }
 	}
 
     async create (request: Request, response: Response) {
-		const createAccount = new CreateAccount(this.repositoryFactory);
-        const { cpf, name } = request.body;
-        const newAccount = new Account(cpf, name);
-        const account = await createAccount.execute(newAccount);
-        return response.status(201).json(account);
+        try {
+            const createAccount = new CreateAccount(this.repositoryFactory);
+            const { cpf, name, email } = request.body;
+            const newAccount = new Account(cpf, name, email);
+            const account = await createAccount.execute(newAccount);
+            return response.status(201).json(account);
+        } catch (error: any) {
+            return response.status(400).json({ message: error });
+        }
 	}
 
     async update (request: Request, response: Response) {
-        const updateAccount = new UpdateAccount(this.repositoryFactory);
-        const { id } = request.params;
-        const updatedAccount = await updateAccount.execute(id, request.body);
-		return response.status(200).json(updatedAccount);
+        try {
+            const updateAccount = new UpdateAccount(this.repositoryFactory);
+            const { id } = request.params;
+            const updatedAccount = await updateAccount.execute(id, request.body);
+            return response.status(200).json(updatedAccount);
+        } catch (error: any) {
+            return response.status(400).json({ message: error });
+        }
 	}
 
     async delete (request: Request, response: Response) {
-        const deleteAccount = new DeleteAccount(this.repositoryFactory);
-        const { id } = request.params;
-		const removedAccount = await deleteAccount.execute(id);
-		return response.status(200).json({ message: "Account deleted!"});
+        try {
+            const deleteAccount = new DeleteAccount(this.repositoryFactory);
+            const { id } = request.params;
+            await deleteAccount.execute(id);
+            return response.status(200).json({ message: "Account deleted!"});
+        } catch (error: any) {
+            return response.status(400).json({ message: error });
+        }
 	}
 
     async deposits (request: Request, response: Response) {
-		const createDeposit = new CreateDeposit(this.repositoryFactory);
-        const { id } = request.params;
-        const { amount, description } = request.body;
-        const deposit: Transaction = {
-            type: 'deposit',
-            amount, 
-            description 
-        };
-        const account = await createDeposit.execute(id, deposit);
-        return response.status(201).json({ message: "Deposit made successfully!" });
+        try {
+            const createDeposit = new CreateDeposit(this.repositoryFactory);
+            const { id } = request.params;
+            const { amount, description } = request.body;
+            const deposit: Transaction = {
+                type: 'deposit',
+                amount, 
+                description 
+            };
+            const account = await createDeposit.execute(id, deposit);
+            return response.status(201).json({ message: "Deposit made successfully!" });
+        } catch (error: any) {
+            return response.status(400).json({ message: error });
+        }
 	}
 
     async withdrawals (request: Request, response: Response) {
-		const createWithdraw = new CreateWithdraw(this.repositoryFactory);
-        const { id } = request.params;
-        const { amount, description } = request.body;
-        const withdraw: Transaction = {
-            type: 'withdraw',
-            amount, 
-            description 
-        };
-        const account = await createWithdraw.execute(id, withdraw);
-        return response.status(201).json({ message: "Withdraw made successfully!" });
+        try {
+            const createWithdraw = new CreateWithdraw(this.repositoryFactory);
+            const { id } = request.params;
+            const { amount, description } = request.body;
+            const withdraw: Transaction = {
+                type: 'withdraw',
+                amount, 
+                description 
+            };
+            const account = await createWithdraw.execute(id, withdraw);
+            return response.status(201).json({ message: "Withdraw made successfully!" });
+        } catch (error: any) {
+            return response.status(400).json({ message: error });
+        }
 	}
 
     async getBalanceById (request: Request, response: Response) {
-		const getBalance = new GetBalance(this.repositoryFactory);
-        const { id } = request.params;
-        const balance = await getBalance.execute(id);
-        return response.status(201).json(balance);
+        try {
+            const getBalance = new GetBalance(this.repositoryFactory);
+            const { id } = request.params;
+            const balance = await getBalance.execute(id);
+            return response.status(201).json(balance); 
+        } catch (error: any) {
+            return response.status(400).json({ message: error });
+        }
 	}
 }

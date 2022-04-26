@@ -11,13 +11,12 @@ export default class DeleteAccount {
 		this.accountRepository = repositoryFactory.createAccountRepository();
 	}
 
-	async execute (id: string): Promise<Account | {}> {
+	async execute (id: string): Promise<Account[]> {
 		const account = await this.accountRepository.getById(id);
         if (!account) {
-            return { message: "Account not found!" };
+            throw "Account not found!";
         }
         const deletedAccount = await this.accountRepository.delete(id);	
-	
 		const body= ` ${account.name} sua conta de cpf ${account.cpf} foi removida`
 		new EmailSender().send("email","Conta removida com sucesso",body);
 		return deletedAccount;

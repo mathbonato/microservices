@@ -11,16 +11,15 @@ export default class UpdateAccount {
 		this.accountRepository = repositoryFactory.createAccountRepository();
 	}
 
-	async execute (id: string, params: {}): Promise<Account | {}> {
+	async execute (id: string, params: {}): Promise<Account> {
 		const account = await this.accountRepository.getById(id);
         if (!account) {
-            return { message: "Account not found!" };
+            throw "Account not found!";
         }
         const updatedAccount = await this.accountRepository.update(id, params);
         if (!updatedAccount) {
-            return { message: "Error on update account!" };
+            throw "Error on update account!";
         }
-   
         const body=  `Olá ${account.name}, seus dados foram alterados com sucesso!`
 		new EmailSender().send("email","Alteração nos dados da conta",body);
 		return updatedAccount;

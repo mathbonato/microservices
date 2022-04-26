@@ -7,13 +7,15 @@ export default class Account {
 	id: string;
     cpf: string;
 	name: string;
+    email: string;
 	private statement: Transaction[];
 
-	constructor (cpf: string, name: string, id?: string) {
+	constructor (cpf: string, name: string, email: string, id?: string) {
         this.id = id ?? uuidv4();
 		this.cpf = new Cpf(cpf).getValue();
         this.name = name;
-        this.statement = []
+        this.email = email;
+        this.statement = [];
 	}
 
     deposit (transaction: Transaction) {
