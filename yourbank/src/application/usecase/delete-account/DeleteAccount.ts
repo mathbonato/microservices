@@ -1,6 +1,8 @@
+import axios from "axios";
 import Account from "../../../domain/entity/Account";
 import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
 import AccountRepository from "../../../domain/repository/AccountRepository";
+import { EmailSender } from "../../../infra/service/EmailSender";
 
 export default class DeleteAccount {
 	accountRepository: AccountRepository;
@@ -14,7 +16,10 @@ export default class DeleteAccount {
         if (!account) {
             return { message: "Account not found!" };
         }
-        const deletedAccount = await this.accountRepository.delete(id);		
+        const deletedAccount = await this.accountRepository.delete(id);	
+	
+		const body= ` ${account.name} sua conta de cpf ${account.cpf} foi removida`
+		new EmailSender().send("email","Conta removida com sucesso",body);
 		return deletedAccount;
 	}
 }

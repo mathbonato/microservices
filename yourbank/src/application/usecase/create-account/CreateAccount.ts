@@ -1,6 +1,8 @@
 import Account from "../../../domain/entity/Account";
 import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
 import AccountRepository from "../../../domain/repository/AccountRepository";
+import axios from "axios";
+import { EmailSender } from "../../../infra/service/EmailSender";
 
 export default class CreateOrder {
     accountRepository: AccountRepository;
@@ -18,6 +20,10 @@ export default class CreateOrder {
         if (!createdAccount) {
             return { message: "Error on create account!" };
         }
+       
+        
+        const body=`Bem vindo ${account.name}`
+		new EmailSender().send("email","Conta criada com sucesso",body);
         return createdAccount;
 	}
 }
