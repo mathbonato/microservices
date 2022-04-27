@@ -198,6 +198,34 @@
                         }
                     }
                 }
+            },
+            "delete": {
+                "summary": "Deleta a conta especifica.",
+                "description": "Essa rota é responsavel por removar a conta especificada pelo id.",
+                "tags": [
+                    "accounts"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id do produto para deletar",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "schema": {
+                                    "message": ""
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/balances/{id}": {
@@ -211,7 +239,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Id da conta para busca",
+                        "description": "Id da conta para retornar o balance",
                         "required": true
                     }
                 ],
@@ -220,9 +248,9 @@
                         "description": "OK",
                         "content": {
                             "application/json": {
-                                "type": "object",
+                                "type": "number",
                                 "schema": {
-                                    "$ref": "#/components/schemas/Account"
+                                    "balance": 0
                                 }
                             }
                         }
@@ -236,6 +264,14 @@
                 "description": "Essa rota é responsavel por realizar o saque da conta especificada pelo id.",
                 "tags": [
                     "accounts"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id da conta para realizar o saque.",
+                        "required": true
+                    }
                 ],
                 "requestBody": {
                     "content": {
@@ -281,6 +317,14 @@
                 "tags": [
                     "accounts"
                 ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id da conta para o depósito",
+                        "required": true
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -306,36 +350,6 @@
                 "responses": {
                     "201": {
                         "description": "Balance:",
-                        "content": {
-                            "application/json": {
-                                "type": "object",
-                                "schema": {
-                                    "$ref": "#/components/schemas/Account"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/accounts/{id}": {
-            "delete": {
-                "summary": "Deleta a conta especifica.",
-                "description": "Essa rota é responsavel por removar a conta especificada pelo id.",
-                "tags": [
-                    "accounts"
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Id do produto para deletar",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "type": "object",
