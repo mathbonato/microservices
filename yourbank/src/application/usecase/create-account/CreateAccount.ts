@@ -3,7 +3,7 @@ import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
 import AccountRepository from "../../../domain/repository/AccountRepository";
 import { EmailSender } from "../../../infra/service/EmailSender";
 
-export default class CreateOrder {
+export default class CreateAccount {
     accountRepository: AccountRepository;
 
 	constructor (readonly repositoryFactory: RepositoryFactory) {
