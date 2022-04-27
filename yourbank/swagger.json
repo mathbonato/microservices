@@ -199,6 +199,154 @@
                     }
                 }
             }
+        },
+        "/balances/{id}": {
+            "get": {
+                "summary": "Retorna o saldo da conta.",
+                "description": "Essa rota é responsável por retornar o saldo da conta especificada pelo id",
+                "tags": [
+                    "accounts"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id da conta para busca",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "schema": {
+                                    "$ref": "#/components/schemas/Account"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/withdrawals/{id}": {
+            "post": {
+                "summary": "Saque da conta.",
+                "description": "Essa rota é responsavel por realizar o saque da conta especificada pelo id.",
+                "tags": [
+                    "accounts"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Account"
+                            },
+                            "examples": {
+                                "account": {
+                                    "value": {
+                                        "id": "16274e9a-f9a9-415f-b55f-a03fd13805eb",
+                                        "transaction":{
+                                            "amount":"100",
+                                            "description": "PIX",
+                                            "createdAt":"26/04/2022"
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Balance:",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "schema": {
+                                    "$ref": "#/components/schemas/Account"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/deposits/{id}": {
+            "post": {
+                "summary": "Depositar na conta.",
+                "description": "Essa rota é responsavel por realizar o deposito na conta especificada pelo id.",
+                "tags": [
+                    "accounts"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Account"
+                            },
+                            "examples": {
+                                "account": {
+                                    "value": {
+                                        "id": "16274e9a-f9a9-415f-b55f-a03fd13805eb",
+                                        "transaction":{
+                                            "amount":"100",
+                                            "description": "PIX",
+                                            "createdAt":"26/04/2022"
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Balance:",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "schema": {
+                                    "$ref": "#/components/schemas/Account"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/accounts/{id}": {
+            "delete": {
+                "summary": "Deleta a conta especifica.",
+                "description": "Essa rota é responsavel por removar a conta especificada pelo id.",
+                "tags": [
+                    "accounts"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id do produto para deletar",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "schema": {
+                                    "$ref": "#/components/schemas/Account"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
