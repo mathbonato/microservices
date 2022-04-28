@@ -8,13 +8,15 @@ export default class Account {
     cpf: string;
 	name: string;
     email: string;
+    zipCode: string;
 	private statement: Transaction[];
 
-	constructor (cpf: string, name: string, email: string, id?: string) {
+	constructor (cpf: string, name: string, email: string, zipCode: string, id?: string) {
         this.id = id ?? uuidv4();
 		this.cpf = new Cpf(cpf).getValue();
         this.name = name;
         this.email = email;
+        this.zipCode = zipCode;
         this.statement = [];
 	}
 
