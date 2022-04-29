@@ -11,7 +11,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:3002/",
+            "url": "http://localhost:3000/",
             "description": "Api de teste."
         }
     ],
@@ -36,7 +36,7 @@
                                         "cpf": "753.752.089-54",
                                         "email": "meninoney@gmail.com",
                                         "birthdate": "13/07/1998",
-                                        "zipCode": "83512000"
+                                        "zipcode": "83512000"
                                     }
                                 }
                             }
@@ -278,18 +278,13 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Account"
+                                "$ref": "#/components/schemas/Transaction"
                             },
                             "examples": {
-                                "account": {
+                                "transaction": {
                                     "value": {
-                                        "id": "16274e9a-f9a9-415f-b55f-a03fd13805eb",
-                                        "transaction":{
-                                            "amount":"100",
-                                            "description": "PIX",
-                                            "createdAt":"26/04/2022"
-                                        }
-                                        
+                                        "amount": 250,
+                                        "description": "Aluguel"  
                                     }
                                 }
                             }
@@ -330,18 +325,13 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Account"
+                                "$ref": "#/components/schemas/Transaction"
                             },
                             "examples": {
-                                "account": {
+                                "transaction": {
                                     "value": {
-                                        "id": "16274e9a-f9a9-415f-b55f-a03fd13805eb",
-                                        "transaction":{
-                                            "amount":"100",
-                                            "description": "PIX",
-                                            "createdAt":"26/04/2022"
-                                        }
-                                        
+                                        "amount": 2000,
+                                        "description": "Pagamento"  
                                     }
                                 }
                             }
@@ -381,7 +371,10 @@
                     "birthdate": {
                         "type": "string" 
                     },
-                    "zipCode": {
+                    "zipcode": {
+                        "type": "string" 
+                    },
+                    "city": {
                         "type": "string" 
                     },
                     "state": {
@@ -392,6 +385,17 @@
                     },
                     "street": {
                         "type": "string" 
+                    }
+                }
+            },
+            "Transaction": {
+                "tyṕe": "object",
+                "properties": {
+                    "amount": {
+                        "type": "integer"
+                    },
+                    "description": {
+                        "type": "string"
                     }
                 }
             }

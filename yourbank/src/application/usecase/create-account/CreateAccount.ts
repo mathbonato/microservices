@@ -17,8 +17,9 @@ export default class CreateAccount {
             throw "Account already exists!";
         }
         const viaCepService = new ViaCepService();
-        const { street, complement, district, state } = await viaCepService.getAddress(account.zipCode || '');
+        const { street, complement, district, state, city } = await viaCepService.getAddress(account.zipcode || '');
         account.street = street;
+        account.city = city;
         account.complement = complement;
         account.district = district; 
         account.state = state;
