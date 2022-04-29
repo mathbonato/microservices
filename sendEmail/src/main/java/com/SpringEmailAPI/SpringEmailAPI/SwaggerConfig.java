@@ -14,13 +14,14 @@ import java.util.ArrayList;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 @Configuration
+@EnableSwagger2
 public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(regex("/email*."))
+                .paths(PathSelectors.any())
                 .build();
 //                .apiInfo(metaInfo());
 
