@@ -11,7 +11,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:3001/",
+            "url": "http://localhost:3002/",
             "description": "Api de teste."
         }
     ],
@@ -35,7 +35,8 @@
                                         "name": "Neymar Jr",
                                         "cpf": "753.752.089-54",
                                         "email": "meninoney@gmail.com",
-                                        "birthdate": "13/07/1998"
+                                        "birthdate": "13/07/1998",
+                                        "zipCode": "83512000"
                                     }
                                 }
                             }
