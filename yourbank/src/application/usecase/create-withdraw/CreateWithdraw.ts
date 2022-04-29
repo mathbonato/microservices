@@ -17,7 +17,7 @@ export default class CreateWithdraw {
         if (!account) throw "Account not found!";
         account.withdraw(withdraw);
 		const body=`Olá  ${account.name}, saque efetuado com sucesso no valor de R$${withdraw.amount} na data ${withdraw.createdAt}`
-		new EmailSender().send("email","Saque efetuado!",body);
+		// new EmailSender().send("email","Saque efetuado!",body);
 		return account;
 	}
 }

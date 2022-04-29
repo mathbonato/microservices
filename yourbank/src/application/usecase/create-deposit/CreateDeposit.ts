@@ -19,7 +19,7 @@ export default class CreateDeposit {
 		}
         account.deposit(deposit);
 		const body=`Olá  ${account.name}, depósito efetuado com sucesso no valor de R$${deposit.amount} na data ${deposit.createdAt}`
-		new EmailSender().send("email","Depósito sucedido!",body);
+		// new EmailSender().send("email","Depósito sucedido!",body);
 		return account;
 	}
 }
