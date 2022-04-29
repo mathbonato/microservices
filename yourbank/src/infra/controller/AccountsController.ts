@@ -44,8 +44,8 @@ export default class AccountsController {
         try {
             const createAccount = new CreateAccount(this.repositoryFactory);
             const { cpf, name, email, zipCode } = request.body;
-            new viaCep().getAddress(zipCode)
-            const newAccount = new Account(cpf, name, email, zipCode);
+            const { } = new viaCep().getAddress(zipCode);
+            const newAccount = new Account(cpf, name, email, zipCode, city);
             const account = await createAccount.execute(newAccount);
             return response.status(201).json(account);
         } catch (error: any) {
