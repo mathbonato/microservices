@@ -383,6 +383,15 @@
                     },
                     "zipCode": {
                         "type": "string" 
+                    },
+                    "state": {
+                        "type": "string" 
+                    },
+                    "complement": {
+                        "type": "string" 
+                    },
+                    "street": {
+                        "type": "string" 
                     }
                 }
             }

@@ -10,7 +10,7 @@ import UpdateAccount from '../../application/usecase/update-account/UpdateAccoun
 import Account from '../../domain/entity/Account';
 import Transaction from '../../domain/entity/Transaction';
 import RepositoryFactory from '../../domain/factory/RepositoryFactory';
-import { viaCep } from '../service/viaCep';
+import { ViaCepService } from '../service/ViaCepService';
 
 export default class AccountsController {
     repositoryFactory: RepositoryFactory;
@@ -44,7 +44,8 @@ export default class AccountsController {
         try {
             const createAccount = new CreateAccount(this.repositoryFactory);
             const { cpf, name, email, zipCode } = request.body;
-            const { street, complement, district, state } = new viaCep().getAddress(zipCode)
+            const viaCepService = new ViaCepService();
+            const { street, complement, district, state } = await viaCepService.getAddress(zipCode)
             const newAccount = new Account(cpf, name, email, zipCode, street, complement, district, state);
             const account = await createAccount.execute(newAccount);
             return response.status(201).json(account);
