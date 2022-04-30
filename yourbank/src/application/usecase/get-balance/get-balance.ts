@@ -17,7 +17,7 @@ export default class GetBalance {
         if (!account) return { message: "Account not found!" };
         const balance = account.getBalance();
 		const body= `Olá ${account.name}, seu saldo atual é R$${balance}`;
-		// new EmailSender().send("email","Consulta de saldo",body);
+		new EmailSender().send(`${account.email}`,"Consulta de saldo",body);
 		return balance;
 	}
 }

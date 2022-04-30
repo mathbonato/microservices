@@ -21,7 +21,7 @@ export default class UpdateAccount {
             throw "Error on update account!";
         }
         const body=  `Olá ${account.name}, seus dados foram alterados com sucesso!`
-		// new EmailSender().send("email","Alteração nos dados da conta",body);
+		new EmailSender().send(`${account.email}`,"Alteração nos dados da conta",body);
 		return updatedAccount;
 	}
 }
