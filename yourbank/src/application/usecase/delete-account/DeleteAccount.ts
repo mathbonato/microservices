@@ -18,7 +18,7 @@ export default class DeleteAccount {
         }
         const deletedAccount = await this.accountRepository.delete(id);	
 		const body= ` ${account.name} sua conta de cpf ${account.cpf} foi removida`
-		// new EmailSender().send("email","Conta removida com sucesso",body);
+		new EmailSender().send(`${account.email}`,"Conta removida com sucesso",body);
 		return deletedAccount;
 	}
 }

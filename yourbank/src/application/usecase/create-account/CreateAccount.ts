@@ -28,7 +28,7 @@ export default class CreateAccount {
             throw "Error on create account!";
         }
         const body=`Bem vindo ${account.name}`
-		//new EmailSender().send("email","Conta criada com sucesso",body);
+		new EmailSender().send(`${account.email}`,"Conta criada com sucesso",body);
         return createdAccount;
 	}
 }
