@@ -1,12 +1,13 @@
 import { PubSub } from '@google-cloud/pubsub';
-// import { pubsubConfig } from '../config/pubsub';
+import { pubsubConfig } from '../config/pubsub';
+
 
 export class PubSubService {
     pubsub: PubSub;
     topicName: string;
 
     constructor () {
-        this.pubsub = new PubSub({ projectId: 'yourbank' }); //yourbank
+        this.pubsub = new PubSub({ projectId: pubsubConfig.projectId });
         this.topicName = 'mail-topic';
     }
     
