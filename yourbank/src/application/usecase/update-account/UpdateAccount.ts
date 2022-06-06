@@ -2,13 +2,15 @@ import axios from "axios";
 import Account from "../../../domain/entity/Account";
 import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
 import AccountRepository from "../../../domain/repository/AccountRepository";
-import { EmailSender } from "../../../infra/service/EmailSender";
+import { PubSubService } from "../../../infra/service/PubSub";
 
 export default class UpdateAccount {
     accountRepository: AccountRepository;
-
+    mailService: any;
+    
 	constructor (readonly repositoryFactory: RepositoryFactory) {
 		this.accountRepository = repositoryFactory.createAccountRepository();
+        this.mailService = new PubSubService();
 	}
 
 	async execute (id: string, params: {}): Promise<Account> {
@@ -20,8 +22,11 @@ export default class UpdateAccount {
         if (!updatedAccount) {
             throw "Error on update account!";
         }
-        const body=  `Olá ${account.name}, seus dados foram alterados com sucesso!`
-		new EmailSender().send(`${account.email}`,"Alteração nos dados da conta",body);
+        const payload = { 
+            email: account.email, 
+            subject: 'Alteração nos dados da conta!', 
+            body: `Olá ${account.name}, seus dados foram alterados com sucesso!` }
+        this.mailService.publish(payload);
 		return updatedAccount;
 	}
 }

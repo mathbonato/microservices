@@ -1,14 +1,15 @@
-import axios from "axios";
 import Account from "../../../domain/entity/Account";
 import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
 import AccountRepository from "../../../domain/repository/AccountRepository";
-import { EmailSender } from "../../../infra/service/EmailSender";
+import { PubSubService } from "../../../infra/service/PubSub";
 
 export default class DeleteAccount {
 	accountRepository: AccountRepository;
-
+    mailService: any;
+    
 	constructor (readonly repositoryFactory: RepositoryFactory) {
 		this.accountRepository = repositoryFactory.createAccountRepository();
+        this.mailService = new PubSubService();
 	}
 
 	async execute (id: string): Promise<Account[]> {
@@ -17,8 +18,11 @@ export default class DeleteAccount {
             throw "Account not found!";
         }
         const deletedAccount = await this.accountRepository.delete(id);	
-		const body= ` ${account.name} sua conta de cpf ${account.cpf} foi removida`
-		new EmailSender().send(`${account.email}`,"Conta removida com sucesso",body);
+        const payload = { 
+            email: account.email, 
+            subject: 'Conta removida com sucesso!', 
+            body: `${account.name}, sua conta de cpf ${account.cpf} foi removida!` }
+        this.mailService.publish(payload);
 		return deletedAccount;
 	}
 }

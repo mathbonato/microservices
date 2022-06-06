@@ -1,15 +1,16 @@
-import axios from "axios";
 import Account from "../../../domain/entity/Account";
 import Transaction from "../../../domain/entity/Transaction";
 import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
 import AccountRepository from "../../../domain/repository/AccountRepository";
-import { EmailSender } from "../../../infra/service/EmailSender";
+import { PubSubService } from "../../../infra/service/PubSub";
 
 export default class CreateDeposit {
     accountRepository: AccountRepository;
-
+    mailService: any;
+    
 	constructor (readonly repositoryFactory: RepositoryFactory) {
 		this.accountRepository = repositoryFactory.createAccountRepository();
+        this.mailService = new PubSubService();
 	}
 
 	async execute (id: string, deposit: Transaction): Promise<Account> {
@@ -18,8 +19,11 @@ export default class CreateDeposit {
 			throw "Account not found!";
 		}
         account.deposit(deposit);
-		const body=`Olá  ${account.name}, depósito efetuado com sucesso no valor de R$${deposit.amount} na data ${deposit.createdAt}`
-		new EmailSender().send(`${account.email}`,"Depósito sucedido!",body);
+        const payload = { 
+            email: account.email, 
+            subject: 'Depósito sucedido!', 
+            body: `Olá  ${account.name}, depósito de R$ ${deposit.amount} efetuado com sucesso na data ${deposit.createdAt}!` }
+        this.mailService.publish(payload);
 		return account;
 	}
 }
