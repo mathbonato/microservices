@@ -1,11 +1,11 @@
 import Account from "../../../domain/entity/Account";
-import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
-import AccountRepository from "../../../domain/repository/AccountRepository";
+import RepositoryFactory from "../../../domain/factory/IRepositoryFactory";
+import IAccountRepository from "../../../domain/repository/IAccountRepository";
 import { PubSubService } from "../../../infra/service/PubSub";
 import { ViaCepService } from "../../../infra/service/ViaCepService";
 
 export default class CreateAccount {
-    accountRepository: AccountRepository;
+    accountRepository: IAccountRepository;
     mailService: any;
 
 	constructor (readonly repositoryFactory: RepositoryFactory) {
@@ -29,7 +29,7 @@ export default class CreateAccount {
         if (!createdAccount) {
             throw "Error on create account!";
         }
-        const payload = { email: account.email, subject: 'Conta criada com sucesso', body: `Bem vindo ${account.name}` }
+        const payload = { email: account.email, subject: 'OK', body: `HEllo ${account.name}` }
         this.mailService.publish(payload);
         return createdAccount;
 	}

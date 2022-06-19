@@ -1,40 +1,38 @@
 import Account from "../../../domain/entity/Account";
-import AccountRepository from "../../../domain/repository/AccountRepository";
+import IAccountRepository from "../../../domain/repository/IAccountRepository";
 
 let accounts: Account[] = [];
 
-export default class AccountRepositoryMemory implements AccountRepository {
+export default class AccountRepositoryMemory implements IAccountRepository {
 
-	constructor () {}
-
-    getAll(): Account[] {
+    async getAll(): Promise<Account[]> {
         return accounts;
     }
 
-    getById(id: string): Account | undefined {
-        return accounts.find(account => account.id === id);
+    async getById(id: string): Promise<Account | null> {
+        return accounts.find(account => account.id === id) || null;
     }
 
-    getByCpf(cpf: string): Account | undefined {
-        return accounts.find(account => account.cpf === cpf);
+    async getByCpf(cpf: string): Promise<Account | null> {
+        return accounts.find(account => account.cpf === cpf) || null;
     }
 
-    create(account: Account): Account {
+    async create(account: Account): Promise<Account> {
+        console.log('Passei aqui 2')
         accounts.push(account);
         return account;
     }
 
-    update(id: string, updateAccount: Account): Account | undefined {
+    async update(id: string, updateAccount: Account): Promise<Account | null> {
         const account = accounts.find(account => account.id === id);
-        if (!account) return undefined;
+        if (!account) return null;
         if (updateAccount.cpf) account.cpf = updateAccount.cpf;
         if (updateAccount.name) account.name = updateAccount.name;
         const accountIndex = accounts.findIndex(account => account.id === id);
         return accounts[accountIndex] = account;
     }
 
-    delete(id: string): Account[] {
+    async delete(id: string): Promise<void> {
         accounts = accounts.filter(account => account.id != id);
-        return accounts; 
     }
 }

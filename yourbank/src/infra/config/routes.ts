@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import AccountsController from '../controller/AccountsController';
-import MemoryRepositoryFactory from '../factory/MemoryRepositoryFactory';
+import RepositoryFactory from '../factory/RepositoryFactory';
+// import MemoryRepositoryFactory from '../factory/MemoryRepositoryFactory';
 
 const routes = Router();
-const repositoryFactory = new MemoryRepositoryFactory();
+const repositoryFactory = new RepositoryFactory();
 const accountController = new AccountsController(repositoryFactory);
 
 routes.get("/accounts", (req, res) => {

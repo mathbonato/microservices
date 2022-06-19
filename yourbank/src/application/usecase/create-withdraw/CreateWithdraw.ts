@@ -1,11 +1,11 @@
 import Account from "../../../domain/entity/Account";
 import Transaction from "../../../domain/entity/Transaction";
-import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
-import AccountRepository from "../../../domain/repository/AccountRepository";
+import RepositoryFactory from "../../../domain/factory/IRepositoryFactory";
+import IAccountRepository from "../../../domain/repository/IAccountRepository";
 import { PubSubService } from "../../../infra/service/PubSub";
 
 export default class CreateWithdraw {
-    accountRepository: AccountRepository;
+    accountRepository: IAccountRepository;
     mailService: any;
     
 	constructor (readonly repositoryFactory: RepositoryFactory) {
