@@ -7,7 +7,7 @@ export class PubSubService {
     topicName: string;
 
     constructor () {
-        this.pubsub = new PubSub({ projectId: pubsubConfig.projectId });
+        this.pubsub = new PubSub({ projectId: 'yourbank' });
         this.topicName = 'mail-topic';
     }
     

@@ -1,9 +1,9 @@
-import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
-import AccountRepository from "../../../domain/repository/AccountRepository";
+import RepositoryFactory from "../../../domain/factory/IRepositoryFactory";
+import IAccountRepository from "../../../domain/repository/IAccountRepository";
 import { PubSubService } from "../../../infra/service/PubSub";
 
 export default class GetBalance {
-    accountRepository: AccountRepository;
+    accountRepository: IAccountRepository;
     mailService: any;
     
 	constructor (readonly repositoryFactory: RepositoryFactory) {

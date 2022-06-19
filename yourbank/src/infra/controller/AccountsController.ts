@@ -9,8 +9,7 @@ import GetBalance from '../../application/usecase/get-balance/get-balance';
 import UpdateAccount from '../../application/usecase/update-account/UpdateAccount';
 import Account from '../../domain/entity/Account';
 import Transaction from '../../domain/entity/Transaction';
-import RepositoryFactory from '../../domain/factory/RepositoryFactory';
-import { ViaCepService } from '../service/ViaCepService';
+import RepositoryFactory from '../../domain/factory/IRepositoryFactory';
 
 export default class AccountsController {
     repositoryFactory: RepositoryFactory;

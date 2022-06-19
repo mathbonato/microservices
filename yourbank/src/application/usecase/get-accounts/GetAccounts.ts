@@ -1,9 +1,9 @@
 import Account from "../../../domain/entity/Account";
-import RepositoryFactory from "../../../domain/factory/RepositoryFactory";
-import AccountRepository from "../../../domain/repository/AccountRepository";
+import RepositoryFactory from "../../../domain/factory/IRepositoryFactory";
+import IAccountRepository from "../../../domain/repository/IAccountRepository";
 
 export default class GetAccounts {
-    accountRepository: AccountRepository;
+    accountRepository: IAccountRepository;
 
 	constructor (readonly repositoryFactory: RepositoryFactory) {
 		this.accountRepository = repositoryFactory.createAccountRepository();
