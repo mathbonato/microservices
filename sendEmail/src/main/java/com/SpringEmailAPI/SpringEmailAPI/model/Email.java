@@ -2,16 +2,16 @@ package com.SpringEmailAPI.SpringEmailAPI.model;
 
 
 public class Email {
-    private String sendTo;
+    private String email;
     private String subject;
     private String body;
 
-    public String getSendTo() {
-        return sendTo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setSendTo(String sendTo) {
-        this.sendTo = sendTo;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSubject() {
@@ -28,5 +28,14 @@ public class Email {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    @Override
+    public String toString() {
+        return "Email{" +
+            "email='" + email + '\'' +
+            ", subject='" + subject + '\'' +
+            ", body='" + body + '\'' +
+            '}';
     }
 }

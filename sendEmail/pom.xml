@@ -13,9 +13,17 @@
 	<name>SpringEmailAPI</name>
 	<description>API to received data and send email</description>
 	<properties>
+        <spring-cloud-gcp.version>1.2.5.RELEASE</spring-cloud-gcp.version>
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-gcp-dependencies</artifactId>
+            <version>${spring-cloud-gcp.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
@@ -32,6 +40,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>2.6.7</version>
 		</dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-boot-starter</artifactId>
@@ -48,10 +62,23 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-gcp-starter-pubsub -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-gcp-starter-pubsub</artifactId>
+            <version>1.2.8.RELEASE</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-core</artifactId>
+        </dependency>
 
 
 
 	</dependencies>
+    
 	<build>
 		<plugins>
 			<plugin>
