@@ -18,10 +18,10 @@ export default class CreateWithdraw {
 	}
 
 	async execute (id: string, withdraw: Transaction): Promise<Account> {
-		const account = await this.accountRepository.getById(id);
-        const teste = new Account(account.cpf, account.name, account.email, account.id);
+		const persistedAccount = await this.accountRepository.getById(id);
+        const account = new Account(persistedAccount.cpf, persistedAccount.name, persistedAccount.email, persistedAccount.id);
         if (!account) throw "Account not found!";
-        teste.withdraw(withdraw);
+        account.withdraw(withdraw);
         const payload = { 
             email: account.email, 
             subject: 'Saque efetuado!', 

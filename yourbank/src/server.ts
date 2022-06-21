@@ -12,7 +12,10 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(routes);
 
-app.listen("3000", () => console.log("Server is running at port 3000!"));
+const startServer = () => {
+    console.log("Server is running at port 3000!");
+    const rabbit = new RabbitMQService();
+    rabbit.consume();
+}
 
-const rabbit = new RabbitMQService();
-rabbit.consume();
+app.listen("3000", () => startServer());

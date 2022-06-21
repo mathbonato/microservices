@@ -31,17 +31,17 @@ export default class Account {
 
     deposit (transaction: Transaction) {
         const repository = new TransactionRepository();
-        repository.create({ type: transaction.type, amount: transaction.amount, description: transaction.description, customerId: this.id });
+        repository.create(new Transaction(transaction.type, transaction.amount, transaction.description, this.id));
     }
 
     withdraw (transaction: Transaction) {
         const repository = new TransactionRepository();
-        repository.create({ type: transaction.type, amount: transaction.amount, description: transaction.description, customerId: this.id });
+        repository.create(new Transaction(transaction.type, transaction.amount, transaction.description, this.id));
     }
 
-    getBalance () {
+    async getBalance () {
         const repository = new TransactionRepository();
-        const statement = repository.getTransactionsByAccountId(this.id);
+        const statement = await repository.getTransactionsByAccountId(this.id);
         if (Array.isArray(statement)) {
             const balance = statement.reduce((acc: number, operation: { type: string, amount: number }) => {
                 if (operation.type === 'deposit') {

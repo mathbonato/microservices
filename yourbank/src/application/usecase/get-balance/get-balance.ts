@@ -1,3 +1,4 @@
+import Account from "../../../domain/entity/Account";
 import RepositoryFactory from "../../../domain/factory/IRepositoryFactory";
 import IAccountRepository from "../../../domain/repository/IAccountRepository";
 import { PubSubService } from "../../../infra/service/PubSub";
@@ -12,14 +13,15 @@ export default class GetBalance {
 	}
 
 	async execute (id: string): Promise<Number | {}> {
-		const account = await this.accountRepository.getById(id);
+		const persistedAccount = await this.accountRepository.getById(id);
+        const account = new Account(persistedAccount.cpf, persistedAccount.name, persistedAccount.email, persistedAccount.id);
         if (!account) return { message: "Account not found!" };
-        const balance = account.getBalance();
+        const balance = await account.getBalance();
         const payload = { 
             email: account.email, 
             subject: 'Consulta de saldo!', 
             body: `Olá ${account.name}, seu saldo atual é R$${balance}!` }
         this.mailService.publish(payload);
-		return balance;
+		return balance || 0;
 	}
 }

@@ -1,4 +1,6 @@
 import client, { Channel, Connection, ConsumeMessage } from "amqplib";
+import Transaction from "../../domain/entity/Transaction";
+import TransactionRepository from "../repository/database/TransactionRepository";
 
 export class RabbitMQService {
     async connection() {
@@ -23,12 +25,15 @@ export class RabbitMQService {
         const channel: Channel = await connection.createChannel();
         await channel.assertQueue('yourbank2');
 
-        const consumer = (channel: Channel) => (message: ConsumeMessage | null): void => {
+        const consumer = (channel: Channel) => async (message: ConsumeMessage | null): Promise<void> => {
             if (message) {
               console.log(message.content.toString())
               const data = JSON.parse(message.content.toString());
-              console.log(data)
-              channel.ack(message)
+              const transaction = new Transaction('fees', data['fees'], 'Tarifa bancária', data['customerId']);
+              const repository = new TransactionRepository();
+              await repository.create(transaction);
+              console.log(data);
+              channel.ack(message);
             }
         }
 
