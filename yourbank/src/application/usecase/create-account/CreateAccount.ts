@@ -2,7 +2,6 @@ import Account from "../../../domain/entity/Account";
 import RepositoryFactory from "../../../domain/factory/IRepositoryFactory";
 import IAccountRepository from "../../../domain/repository/IAccountRepository";
 import { PubSubService } from "../../../infra/service/PubSub";
-import { RabbitMQService } from "../../../infra/service/RabbitMQ";
 import { ViaCepService } from "../../../infra/service/ViaCepService";
 
 export default class CreateAccount {
@@ -33,8 +32,6 @@ export default class CreateAccount {
         }
         const payload = { email: account.email, subject: 'OK', body: `HEllo ${account.name}` }
         this.mailService.publish(payload);
-        const rabbit = new RabbitMQService();
-        rabbit.publish(payload);
         return createdAccount;
 	}
 }

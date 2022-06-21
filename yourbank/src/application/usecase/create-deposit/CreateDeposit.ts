@@ -15,10 +15,11 @@ export default class CreateDeposit {
 
 	async execute (id: string, deposit: Transaction): Promise<Account> {
 		const account = await this.accountRepository.getById(id);
+        const teste = new Account(account.cpf, account.name, account.email, account.id);
         if (!account) { 
 			throw "Account not found!";
 		}
-        account.deposit(deposit);
+        teste.deposit(deposit);
         const payload = { 
             email: account.email, 
             subject: 'Depósito sucedido!', 
