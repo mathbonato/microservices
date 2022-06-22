@@ -5,8 +5,8 @@ import { prisma } from './prismaClient';
 export default class AccountRepository implements IAccountRepository {
  
   async getAll(): Promise<any[]> {
-    //  const accounts = await prisma.account.findMany({ include: { statement: true } });
-        return [];
+     const accounts = await prisma.account.findMany({ include: { statement: true } });
+        return accounts;
     }
 
     async getById(id: string): Promise<any | null> {
@@ -33,6 +33,7 @@ export default class AccountRepository implements IAccountRepository {
             cpf: payload.cpf,
             name: payload.name,
             email: payload.email,
+            birthdate: payload.birthdate,
             zipcode: payload.zipcode,
             city: payload.city,
             street: payload.street,
@@ -44,18 +45,22 @@ export default class AccountRepository implements IAccountRepository {
         return account;
     }
 
-    async update(id: string, params: object): Promise<any> {
-        const requestLog = await prisma.account.findUnique({
+    async update(id: string, params: any): Promise<any> {
+        const account = await prisma.account.findUnique({
             where: { id },
         });
         
-        const updateRequestLog = await prisma.account.update({
+        const updateAccount = await prisma.account.update({
             where: {
-            id: requestLog?.id,
+            id: account?.id,
             },
-            data: { ...params, updated_at: new Date() },
+            data: { name: params.name,
+              email: params.email,
+              cpf: params.cpf,
+              birthdate: params.birthdate,
+               updated_at: new Date() },
         });
-        return updateRequestLog;
+        return updateAccount;
     }
 
     async delete(id: string): Promise<void> {

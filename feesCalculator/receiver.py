@@ -13,7 +13,7 @@ def callback(ch, method, properties, body):
     result = { "customerId": data['customerId'], "fees": fees }
     message = json.dumps(result)   
     channel.basic_publish(exchange='',
-                      routing_key='yourbank2',
+                      routing_key='calculatedFees',
                       body=message)
     print("RESPONSE %r" % message)
 

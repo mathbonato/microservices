@@ -9,6 +9,7 @@ export default class Account {
     cpf: string;
 	name: string;
     email: string;
+    birthdate: string;
     zipcode?: string;
     city?: string;
     street?: string;
@@ -16,11 +17,12 @@ export default class Account {
     district?: string;
     state?: string;
 
-	constructor (cpf: string, name: string, email: string,  id?: string, zipcode?: string, city?: string, street?: string, complement?: string, district?: string, state?: string) {
+	constructor (cpf: string, name: string, email: string, birthdate: string, id?: string, zipcode?: string, city?: string, street?: string, complement?: string, district?: string, state?: string) {
         this.id = id ?? uuidv4();
 		this.cpf = new Cpf(cpf).getValue();
         this.name = name;
         this.email = email;
+        this.birthdate = birthdate;
         this.zipcode = zipcode;
         this.city = city;
         this.street = street;

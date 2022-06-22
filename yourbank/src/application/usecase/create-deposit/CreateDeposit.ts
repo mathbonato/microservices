@@ -15,7 +15,7 @@ export default class CreateDeposit {
 
 	async execute (id: string, deposit: Transaction): Promise<Account> {
         const persistedAccount = await this.accountRepository.getById(id);
-        const account = new Account(persistedAccount.cpf, persistedAccount.name, persistedAccount.email, persistedAccount.id);
+        const account = new Account(persistedAccount.cpf, persistedAccount.name, persistedAccount.email, persistedAccount.birthdate, persistedAccount.id);
         if (!account) { 
 			throw "Account not found!";
 		}

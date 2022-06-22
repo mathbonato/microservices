@@ -14,7 +14,7 @@ export default class GetBalance {
 
 	async execute (id: string): Promise<Number | {}> {
 		const persistedAccount = await this.accountRepository.getById(id);
-        const account = new Account(persistedAccount.cpf, persistedAccount.name, persistedAccount.email, persistedAccount.id);
+        const account = new Account(persistedAccount.cpf, persistedAccount.name, persistedAccount.email, persistedAccount.birthdate, persistedAccount.id);
         if (!account) return { message: "Account not found!" };
         const balance = await account.getBalance();
         const payload = { 

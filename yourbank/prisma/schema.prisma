@@ -15,6 +15,7 @@ model Account {
   cpf             String    @unique
   name            String    
   email           String
+  birthdate       String
   zipcode         String?
   city            String?
   street          String?

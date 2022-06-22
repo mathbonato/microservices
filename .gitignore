@@ -3,3 +3,7 @@ node_modules
 target
 .env
 yourbank-22dca9d68fdf.json
+sendEmail/src/main/resources/yourbank-ae3bb9d8ebc3.json
+yourbank/yourbank-ae3bb9d8ebc3.json
+yourbank/prisma/migrations/20220619172147_createdb/migration.sql
+sendEmail/SpringEmailAPI.iml

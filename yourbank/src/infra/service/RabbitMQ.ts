@@ -23,7 +23,7 @@ export class RabbitMQService {
         console.log("============== START CONSUMER ================")
         const connection = await this.connection();
         const channel: Channel = await connection.createChannel();
-        await channel.assertQueue('yourbank2');
+        await channel.assertQueue('calculatedFees');
 
         const consumer = (channel: Channel) => async (message: ConsumeMessage | null): Promise<void> => {
             if (message) {
@@ -37,6 +37,6 @@ export class RabbitMQService {
             }
         }
 
-        await channel.consume('yourbank2', consumer(channel));
+        await channel.consume('calculatedFees', consumer(channel));
     }
 }

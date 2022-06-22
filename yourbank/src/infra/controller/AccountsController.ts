@@ -42,8 +42,8 @@ export default class AccountsController {
     async create (request: Request, response: Response) {
         try {
             const createAccount = new CreateAccount(this.repositoryFactory);
-            const { cpf, name, email, zipcode } = request.body;
-            const newAccount = new Account(cpf, name, email, zipcode);
+            const { cpf, name, email, birthdate, zipcode } = request.body;
+            const newAccount = new Account(cpf, name, email, birthdate, "", zipcode);
             const account = await createAccount.execute(newAccount);
             return response.status(201).json(account);
         } catch (error: any) {
