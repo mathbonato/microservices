@@ -6,8 +6,8 @@ services:
         container_name: "rabbitmq"
         restart: always
         environment:
-            - "RABBITMQ_DEFAULT_PASS=guest"
-            - "RABBITMQ_DEFAULT_USER=guest"
+            - "RABBITMQ_DEFAULT_PASS=username"
+            - "RABBITMQ_DEFAULT_USER=password"
         ports:
             - 15672:15672
             - 5672:5672

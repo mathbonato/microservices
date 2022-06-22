@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import json
 import pika
-
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+credentials = pika.PlainCredentials('username', 'password')
+connection = pika.BlockingConnection(pika.ConnectionParameters
+(host='localhost', port=5672, credentials=credentials))
 channel = connection.channel()
 
 def callback(ch, method, properties, body):

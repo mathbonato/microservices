@@ -5,7 +5,7 @@ import TransactionRepository from "../repository/database/TransactionRepository"
 export class RabbitMQService {
     async connection() {
         const connection = await client.connect(
-            "amqp://guest:guest@localhost:5672"
+            "amqp://username:password@localhost:5672"
         );
         return connection;
     }
